@@ -12,8 +12,8 @@ extension UILabel {
         return self.text ?? ""
     }
     
-    static func generate(text: String) -> Self {
-        let label = Self()
+    static func generate(text: String) -> UILabel {
+        let label = UILabel()
         label.text = text
         label.textColor = .white
         label.font = UIFont.preferredFont(forTextStyle: .title3)
@@ -30,5 +30,20 @@ extension UIButton {
     var sign: String {
         guard let text = self.titleLabel?.text, text.isOperator else { return "error"}
         return text
+    }
+}
+
+extension UIStackView {
+    static func generate(with views: UIView...) -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 8
+        
+        views.forEach {
+            stackView.addArrangedSubview($0)
+        }
+        
+        return stackView
     }
 }

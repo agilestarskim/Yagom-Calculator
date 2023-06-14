@@ -29,19 +29,20 @@ final class CalculatorViewController: UIViewController {
         self.displayLabel.text = self.calculatorManager.inputOperand(Symbol.dot)
     }
     
-    
     @IBAction private func tapOperatorButton(_ sender: UIButton) {
-        self.operatorLabel.text = self.calculatorManager.inputOperator(sender.unwrappedTitle) { `operator`, operand in
-            self.displayLabel.text = Number.zero
-            return self.recordOnStack(operator: `operator`, operand: operand)
-        }
+        self.operatorLabel.text = self.calculatorManager.inputOperator(
+            sender.unwrappedTitle,
+            onFirstOperatorInput: { recentOperator, recentOperand in
+                self.recordOnStack(operator: recentOperator, operand: recentOperand)
+            }
+        )
+        self.displayLabel.text = Number.zero
         self.equalButton.isEnabled = true
     }
-
     
     @IBAction private func tapEqualButton(_ sender: UIButton) {
-        self.displayLabel.text = self.calculatorManager.deliverResult {`operator`, operand in
-            return self.recordOnStack(operator: `operator`, operand: operand)
+        self.displayLabel.text = self.calculatorManager.deliverResult {recentOperator, recentOperand in
+            self.recordOnStack(operator: recentOperator, operand: recentOperand)
         }
         self.operatorLabel.text = Symbol.empty
         self.equalButton.isEnabled = false
@@ -66,18 +67,7 @@ final class CalculatorViewController: UIViewController {
     private func recordOnStack(operator: String, operand: String) {
         let operatorLabel = UILabel.generate(text: `operator`)
         let operandLabel = UILabel.generate(text: operand)
-        
-        let stackView: UIStackView = {
-            let stackView = UIStackView()
-            stackView.axis = .horizontal
-            stackView.alignment = .center
-            stackView.spacing = Spacing.recordStackView
-            
-            return stackView
-        }()
-        
-        stackView.addArrangedSubview(operatorLabel)
-        stackView.addArrangedSubview(operandLabel)
+        let stackView = UIStackView.generate(with: operatorLabel, operandLabel)
         
         self.recordStackView.addArrangedSubview(stackView)
         self.scrollToBottom()

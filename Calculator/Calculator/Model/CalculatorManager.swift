@@ -10,11 +10,21 @@ extension CalculatorViewController {
         private var expression: String = ""
         
         private var incomingRecentOperand: String {
-            return self.getRecentOperand()
+            let recentOperatorIndex = self.recentOperatorIndex ?? self.expression.startIndex
+            let afterRecentOperatorIndex = self.expression.index(after: recentOperatorIndex)
+            return String(self.expression[afterRecentOperatorIndex...])
         }
         
         private var incomingRecentOperator: String {
-            return self.getRecentOperator()
+            if let recentOperator = self.expression.last(where: { $0.isOperator }) {
+                return String(recentOperator)
+            } else {
+                return Symbol.empty
+            }
+        }
+        
+        private var recentOperatorIndex: String.Index? {
+            return self.expression.lastIndex { $0.isOperator }
         }
         
         func inputOperand(_ element: String) -> String {
@@ -30,12 +40,11 @@ extension CalculatorViewController {
             return InputFormatter.format(from: self.incomingRecentOperand)
         }
         
-        
-        func inputOperator(_ element: String, record: (String, String) -> Void) -> String {
+        func inputOperator(_ element: String, onFirstOperatorInput: (String, String) -> Void) -> String {
             if let last = self.expression.last, last.isOperator {
                 self.expression.removeLast()
             } else if self.expression.isNotEmpty {
-                record(self.incomingRecentOperator, ResultFormatter.format(from: self.incomingRecentOperand))
+                onFirstOperatorInput(self.incomingRecentOperator, ResultFormatter.format(from: self.incomingRecentOperand))
             } else {
                 return Symbol.empty
             }
@@ -62,7 +71,7 @@ extension CalculatorViewController {
         }
         
         func clearRecentOperand() {
-            if let recentOperatorIndex = self.getRecentOperatorIndex()  {
+            if let recentOperatorIndex = self.recentOperatorIndex  {
                 self.expression = String(self.expression[...recentOperatorIndex])
             } else {
                 self.expression = Symbol.empty
@@ -82,28 +91,6 @@ extension CalculatorViewController {
                 return ResultFormatter.format(from: self.incomingRecentOperand)
             } catch {
                 return ResultFormatter.format(from: self.incomingRecentOperand)
-            }
-        }
-        
-        private func getRecentOperand() -> String {
-            if let recentOperatorIndex = self.getRecentOperatorIndex() {
-                let startIndex = self.expression.index(after: recentOperatorIndex)
-                let substring = self.expression[startIndex...]
-                let result = String(substring)
-                return result
-            }
-            return self.expression
-        }
-        
-        private func getRecentOperatorIndex() -> String.Index? {
-            return self.expression.lastIndex { $0.isOperator }
-        }
-        
-        private func getRecentOperator() -> String {
-            if let recentOperator = self.expression.last(where: { $0.isOperator }) {
-                return String(recentOperator)
-            } else {
-                return Symbol.empty
             }
         }
     }
