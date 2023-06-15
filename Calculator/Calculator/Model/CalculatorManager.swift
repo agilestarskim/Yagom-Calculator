@@ -10,9 +10,11 @@ extension CalculatorViewController {
         private var expression: String = ""
         
         private var incomingRecentOperand: String {
-            let recentOperatorIndex = self.recentOperatorIndex ?? self.expression.startIndex
-            let afterRecentOperatorIndex = self.expression.index(after: recentOperatorIndex)
-            return String(self.expression[afterRecentOperatorIndex...])
+            if let recentOperatorIndex = self.recentOperatorIndex {
+                let afterRecentOperatorIndex = self.expression.index(after: recentOperatorIndex)
+                return String(self.expression[afterRecentOperatorIndex...])
+            }
+            return self.expression            
         }
         
         private var incomingRecentOperator: String {
