@@ -55,7 +55,8 @@
 
 ## 3. 📊 다이어그램
 
-![Calculator](https://github.com/agilestarskim/ios-calculator-app/assets/79740398/92149839-576f-419c-bffd-5d3b3214b0f2)
+![Calculator](https://github.com/agilestarskim/Yagom-Calculator/assets/79740398/f68b5c96-d13c-41ba-ab1f-6e538392b0f5)
+
 
 <br>
 
@@ -63,7 +64,10 @@
 ## 4. 📲 실행 화면
 |일반연산|음수연산|소수연산|
 |----|----|----|
-|![일반연산](https://github.com/agilestarskim/ios-calculator-app/assets/79740398/4ab6bcab-df6b-42b2-abac-b129a12807c6)|![음수연산](https://github.com/agilestarskim/ios-calculator-app/assets/79740398/5812a32d-a6df-4acc-9f99-c1265c391595)|![소수연산](https://github.com/agilestarskim/ios-calculator-app/assets/79740398/5e2d2ae0-bca5-475b-bbac-d0ae8e23be6b)|
+|![일반연산](https://github.com/agilestarskim/Yagom-Calculator/assets/79740398/70832202-6777-4e85-b7a2-8e1a0f49b486)|![음수연산](https://github.com/agilestarskim/Yagom-Calculator/assets/79740398/5d91014f-c87c-4526-9277-71293224c8f8)|![소수연산](https://github.com/agilestarskim/Yagom-Calculator/assets/79740398/9ded9342-7fe1-4f1e-92e8-433354b59dbe)|
+
+
+
 
 
 
